@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexSticker Studio | Premium Custom Vinyl Stickers & Print Art</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --bg-surface: #ffffff;
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+            --accent-warm: #f43f5e;
+            --accent-cyan: #06b6d4;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --text-soft: #94a3b8;
+            --border-light: rgba(148, 163, 184, 0.2);
+            --border-hover: rgba(99, 102, 241, 0.35);
+            --shadow-subtle: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+            --shadow-card: 0 12px 32px -4px rgba(15, 23, 42, 0.08);
+            --shadow-card-hover: 0 24px 48px -8px rgba(79, 70, 229, 0.16);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 15%, rgba(236, 72, 153, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
+        }
+
+        /* Subtle Geometric Background Pattern */
+        .ambient-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+            transition: var(--transition);
+        }
+
+        .brand-logo-group:hover .brand-logo-img {
+            transform: rotate(-6deg) scale(1.08);
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+        }
+
+        .brand-name {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-name span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1877f2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(24, 119, 242, 0.25);
+            transition: var(--transition);
+        }
+
+        .nav-cta-btn:hover {
+            transform: translateY(-2px);
+            background: #0c63d4;
+            box-shadow: 0 8px 22px rgba(24, 119, 242, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            padding: 150px 24px 90px;
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            background: #ede9fe;
+            border: 1px solid #ddd6fe;
+            border-radius: 999px;
+            color: #6d28d9;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 4.2rem;
+            line-height: 1.05;
+            font-weight: 900;
+            letter-spacing: -1.8px;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+        }
+
+        .hero-title .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.18rem;
+            color: var(--text-muted);
+            margin-bottom: 38px;
+            max-width: 530px;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-facebook-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #1877f2, #0d63d6);
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(24, 119, 242, 0.3);
+            transition: var(--transition);
+        }
+
+        .btn-facebook-main:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(24, 119, 242, 0.45);
+            background: linear-gradient(135deg, #2482fc, #1877f2);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 28px;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: var(--shadow-subtle);
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Image Card Showcase */
+        .hero-visual-card {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-display-wrapper {
+            position: relative;
+            width: 390px;
+            height: 390px;
+            border-radius: 38px;
+            background: linear-gradient(135deg, #ffffff, #f1f5f9);
+            padding: 16px;
+            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.25), 0 0 0 1px rgba(148, 163, 184, 0.15);
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(1.5deg); }
+        }
+
+        .hero-img-main {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 28px;
+            display: block;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Floating Light Badges */
+        .floating-badge {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 18px;
+            padding: 14px 22px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 20px 35px -5px rgba(15, 23, 42, 0.12);
+            animation: floatFast 5s ease-in-out infinite alternate;
+        }
+
+        .badge-left {
+            bottom: -20px;
+            left: -24px;
+        }
+
+        .badge-right {
+            top: 20px;
+            right: -24px;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes floatFast {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+        }
+
+        .floating-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #ede9fe;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+        }
+
+        .badge-title {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .badge-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* Stats Strip */
+        .specs-strip {
+            background: #ffffff;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            padding: 50px 24px;
+            margin: 40px 0 60px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .specs-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .spec-num {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .spec-num span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .spec-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* Section Layout */
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 70px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 55px;
+        }
+
+        .section-tag {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 2.7rem;
+            font-weight: 900;
+            letter-spacing: -0.8px;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .custom-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 38px 30px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .card-icon {
+            width: 62px;
+            height: 62px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ede9fe, #fce7f3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .card-link:hover {
+            gap: 12px;
+            color: #7c3aed;
+        }
+
+        /* Feature Pillars Strip */
+        .features-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .feature-box {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 22px;
+            padding: 32px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .feature-box i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 18px;
+        }
+
+        .feature-box h4 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .feature-box p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Call To Action Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 36px;
+            padding: 75px 40px;
+            text-align: center;
+            box-shadow: 0 25px 60px -15px rgba(79, 70, 229, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+
+        .cta-desc {
+            max-width: 620px;
+            margin: 0 auto 36px;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-light);
+            padding: 50px 24px 30px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .footer-logo-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-row img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 24px;
+        }
+
+        .footer-social-link {
+            color: #1877f2;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: var(--transition);
+        }
+
+        .footer-social-link:hover {
+            color: #0c63d4;
+            text-decoration: underline;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 130px;
+            }
+            .hero-desc {
+                margin: 0 auto 36px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .logo-display-wrapper {
+                width: 320px;
+                height: 320px;
+            }
+            .specs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features-row {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .section-title {
+                font-size: 2.1rem;
+            }
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-grid"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand-logo-group">
+                <img src="sticker.jpg" alt="ApexSticker Logo" class="brand-logo-img">
+                <div class="brand-name">ApexSticker <span>Studio</span></div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#services" class="nav-link">Sticker Styles</a></li>
+                <li><a href="#durability" class="nav-link">Durability & Quality</a></li>
+                <li><a href="#contact" class="nav-link">Direct Inquiries</a></li>
+            </ul>
+
+            <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="nav-cta-btn">
+                <i class="fa-brands fa-facebook-messenger"></i> Message on Facebook
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-sparkles"></i> Premium Ultra-Gloss Vinyl & Custom Cuts
+            </div>
+            <h1 class="hero-title">
+                Custom Stickers Crafted with <span class="gradient-text">Flawless Brilliance</span>
+            </h1>
+            <p class="hero-desc">
+                Bring your unique artwork, brand logos, or personal decals to life with industrial-grade, scratch-resistant, weatherproof vinyl. Designed to turn heads everywhere.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn-facebook-main">
+                    <i class="fa-brands fa-facebook"></i> Connect on Facebook
+                </a>
+                <a href="#services" class="btn-secondary">
+                    <i class="fa-solid fa-shapes"></i> View Product Catalog
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual-card">
+            <div class="logo-display-wrapper">
+                <img src="sticker.jpg" alt="Featured Custom Sticker" class="hero-img-main">
+            </div>
+
+            <!-- Floating Trust Badges -->
+            <div class="floating-badge badge-left">
+                <div class="floating-icon"><i class="fa-solid fa-droplet-slash"></i></div>
+                <div>
+                    <div class="badge-title">100% Waterproof</div>
+                    <div class="badge-sub">UV & weather shielded</div>
+                </div>
+            </div>
+
+            <div class="floating-badge badge-right">
+                <div class="floating-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div>
+                    <div class="badge-title">Fast Production</div>
+                    <div class="badge-sub">Carefully packed & shipped</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Strip -->
+    <div class="specs-strip">
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="spec-num">100<span>%</span></div>
+                <div class="spec-label">Sun & Water Proof Tested</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-num">2400<span>DPI</span></div>
+                <div class="spec-label">High-Definition Vivid Color</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-num">5<span>+</span> Years</div>
+                <div class="spec-label">Outdoor Vinyl Longevity</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-num">10k<span>+</span></div>
+                <div class="spec-label">Satisfied Happy Customers</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticker Catalog Section -->
+    <section id="services" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">Explore Collection</span>
+            <h2 class="section-title">Engineered For Every Creative Project</h2>
+            <p class="section-desc">From individual die-cut decals to heavy-duty motorcycle wraps and luxury merchandise branding.</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="custom-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-scissors"></i></div>
+                    <h3 class="card-title">Die-Cut Precision Vinyl</h3>
+                    <p class="card-desc">Accurately contoured to the exact silhouette of your artwork with flawless laser-clean edges.</p>
+                </div>
+                <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="card-link">
+                    Order Die-Cuts <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="custom-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-motorcycle"></i></div>
+                    <h3 class="card-title">Heavy-Duty Vehicle Decals</h3>
+                    <p class="card-desc">Thick laminated outdoor film engineered to endure rain, road mud, car washes, and harsh sunlight.</p>
+                </div>
+                <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="card-link">
+                    Inquire Vehicle Prints <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="custom-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-gem"></i></div>
+                    <h3 class="card-title">Holographic & Metallic Finishes</h3>
+                    <p class="card-desc">Mesmerizing rainbow color shifts and reflective chrome effects that command instant attention.</p>
+                </div>
+                <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="card-link">
+                    Get Holographic Stickers <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="custom-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-box-archive"></i></div>
+                    <h3 class="card-title">Brand & Packaging Labels</h3>
+                    <p class="card-desc">Professional corporate stickers for jars, bottles, shipping boxes, pouches, and retail merchandise.</p>
+                </div>
+                <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="card-link">
+                    Order Product Labels <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Durability Quality Section -->
+    <section id="durability" class="section-container" style="padding-top: 20px;">
+        <div class="section-header">
+            <span class="section-tag">Why Choose Us</span>
+            <h2 class="section-title">Built To Last, Designed To Inspire</h2>
+            <p class="section-desc">We never cut corners on quality. Each sticker is printed using commercial-grade inks on tear-resistant vinyl.</p>
+        </div>
+
+        <div class="features-row">
+            <div class="feature-box">
+                <i class="fa-solid fa-shield-virus"></i>
+                <h4>Scratch & Tear Proof</h4>
+                <p>Heavy laminate coating prevents peeling, scuffing, and scratches even on daily-handled devices.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-sun"></i>
+                <h4>UV Resistant Inks</h4>
+                <p>Colors stay vibrant and saturated under direct sunlight without yellowing or fading over time.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <h4>Clean Residue-Free Removal</h4>
+                <p>Strong long-lasting adhesion that leaves zero sticky gunk or glue residue when you decide to peel it off.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section id="contact" class="section-container">
+        <div class="cta-banner">
+            <h2 class="cta-title">Ready to Bring Your Custom Designs to Reality?</h2>
+            <p class="cta-desc">
+                Message our friendly production studio directly on Facebook. Send your images, discuss custom sizes, or get an instant price quotation today!
+            </p>
+            <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn-facebook-main" style="padding: 18px 48px; font-size: 1.15rem;">
+                <i class="fa-brands fa-facebook-messenger" style="font-size: 1.4rem;"></i> Message Us on Facebook
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo-row">
+            <img src="sticker.jpg" alt="Logo">
+            <span style="font-weight: 800; font-size: 1.25rem; color: var(--text-dark);">ApexSticker Studio</span>
+        </div>
+        <p class="footer-text">
+            © 2026 ApexSticker Studio. All rights reserved. Crafted with passion for creators, brands, and riders.
+        </p>
+        <p>
+            Official Social:
+            <a href="https://www.facebook.com/share/1HkSqk31pU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+                <i class="fa-brands fa-facebook"></i> Visit our Facebook Page
+            </a>
+        </p>
+    </footer>
+
+</body>
+</html>
